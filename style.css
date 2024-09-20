@@ -247,7 +247,7 @@ mark.blue {
   #content p{font-size: 2.7vh;}
   #content span{font-size: 1em;}
   #content-background {
-    width: 80%;
+    width: 90%;
     margin: auto;
   }
 
@@ -283,7 +283,7 @@ mark.blue {
 @media screen and (orientation : portrait)
 and (max-width : 640px){
   #content-background {
-    width: 80%;
+    width: 90%;
     margin: auto;
   }
 
@@ -292,10 +292,10 @@ and (max-width : 640px){
   }
 
   .address {
-    font-size: 7px;
+    font-size: 8px;
   }
   .explain {
-    font-size: 8px !important;
+    font-size: 9px !important;
     line-height: 12px !important;
   }
   .switch-container span {
