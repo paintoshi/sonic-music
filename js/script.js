@@ -94,7 +94,8 @@ spotLight, ambient_light, plane,
 FOV = 200
 
 /** RPC functions */
-const RPC_URL = "https://rpc.testnet.soniclabs.com"
+// const RPC_URL = "https://rpc.testnet.soniclabs.com"
+const RPC_URL = "https://rpcapi.fantom.network"
 let lastProcessedBlockNumber = 0
 
 async function getLatestBlockAndTransactions() {
@@ -624,27 +625,26 @@ function interpret_hash(hash, type) {
 }
 
 function interpret_amount_note(val, type){
-  let length = current_notes.length
   if (val < .001) {
-    return current_notes_send[length - 1]
+    return current_notes_send[0]
   } else if ((val >= .001) && (val < 0.01)) {
-    return current_notes_send[length - 2]
+    return current_notes_send[1]
   } else if ((val >= 0.01) && (val < 0.1)) {
-    return current_notes_send[length - 3]
+    return current_notes_send[2]
   } else if ((val >= 0.1) && (val < 1)) {
-    return current_notes_send[length - 4]
+    return current_notes_send[3]
   } else if ((val >= 1) && (val < 10)) {
-    return current_notes_send[length - 5]
+    return current_notes_send[4]
   } else if ((val >= 10) && (val < 100)) {
-    return current_notes_send[length - 6]
-  }else if ((val >= 100) && (val < 1000)) {
-    return current_notes_send[length - 7]
-  }else if ((val >= 1000) && (val < 5000)) {
-    return current_notes_send[length - 8]
-  }else if ((val >= 5000) && (val < 10000)) {
-    return current_notes_send[length - 9]
-  }else {
-    return current_notes_send[length - 10]
+    return current_notes_send[5]
+  } else if ((val >= 100) && (val < 1000)) {
+    return current_notes_send[6]
+  } else if ((val >= 1000) && (val < 5000)) {
+    return current_notes_send[7]
+  } else if ((val >= 5000) && (val < 10000)) {
+    return current_notes_send[8]
+  } else {
+    return current_notes_send[9]
   }
 }
 
