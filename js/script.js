@@ -541,7 +541,7 @@ window.onresize = function(event) {
 Draw the light box for each note
 */
 function trigger_light(x, amount, type) {
-  var ran_cube = cubes.children[(cubes.children.length - 1) - x];
+  var ran_cube = cubes.children[x];
   
   if (isNewMelody && x === 0) {
     currentBaseColor = new THREE.Color(current_colors[0]);
@@ -688,38 +688,45 @@ function interpret_amount_scale(val){
   Creates the background bars synced with the melody
 */
 function create_grid(content) {
-  //reset objects and clean up references in memory
+  // Reset objects and clean up references in memory
   while (cubes.children.length > 256) {
-    cubes.children[0].geometry.dispose()
-    cubes.children[0].material.dispose()
-    //cubes.children[0] = undefined
-    cubes.remove(cubes.children[0])
+    cubes.children[0].geometry.dispose();
+    cubes.children[0].material.dispose();
+    cubes.remove(cubes.children[0]);
   }
 
-	var framedWidth = (window.innerWidth) * .9 //frame amount
-  //var transaxx = content[0].length
-  var transaxx = content
-  var fixedWidthOfOneUnit = framedWidth / transaxx
+  // Use the full window width
+  var framedWidth = window.innerWidth;
+  var transaxx = content;
+  var fixedWidthOfOneUnit = framedWidth / transaxx;
+
+  // Limit the maximum width of each cube
   if (fixedWidthOfOneUnit > 150) {
-  	fixedWidthOfOneUnit = 150
+    fixedWidthOfOneUnit = 150;
+    framedWidth = fixedWidthOfOneUnit * transaxx; // Adjust framedWidth accordingly
   }
-  var totalWidth =  fixedWidthOfOneUnit * transaxx
-  var the_floor = ((totalWidth) * .5) - (fixedWidthOfOneUnit * .5)
 
-  var geometry = new THREE.BoxGeometry(fixedWidthOfOneUnit, window.innerHeight, 50)
+  var totalWidth = fixedWidthOfOneUnit * transaxx;
+  var startX = -framedWidth / 2 + fixedWidthOfOneUnit / 2; // Starting position on the X-axis
+
+  var geometry = new THREE.BoxGeometry(fixedWidthOfOneUnit, window.innerHeight, 50);
 
   for (var x = 0; x < transaxx; x++) {
-      var material = new THREE.MeshBasicMaterial({})
-      material.color.setHex (0x00ffff)
-      material.transparent = true
-      material.opacity = 0
-      var cube = new THREE.Mesh(geometry, material)
-      cube.scale.z = 1
-      cube.position.x = the_floor - (fixedWidthOfOneUnit * x)
-      cube.position.y = 0
-      cube.position.z = cube.geometry.parameters.depth / 2 * cube.scale.z
-      cubes.add(cube)
-      material.dispose();
+    var material = new THREE.MeshBasicMaterial({});
+    material.color.setHex(0x00ffff);
+    material.transparent = true;
+    material.opacity = 0;
+
+    var cube = new THREE.Mesh(geometry, material);
+    cube.scale.z = 1;
+
+    // Position cubes from left to right across the screen
+    cube.position.x = startX + fixedWidthOfOneUnit * x;
+    cube.position.y = 0;
+    cube.position.z = cube.geometry.parameters.depth / 2 * cube.scale.z;
+
+    cubes.add(cube);
+    material.dispose();
   }
   geometry.dispose();
 }
@@ -749,6 +756,7 @@ function on_window_resize() {
     camera.updateProjectionMatrix()
 
     renderer.setSize( window.innerWidth, window.innerHeight )
+    create_grid(64);
 }
 
 // save melody in a melody buffer
