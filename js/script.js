@@ -26,7 +26,6 @@ var mute = false
 var clock = new THREE.Clock()
 var notes_array = []
 var cubes = null
-var block_explorer = "https://testnet.soniclabs.com/tx/"
 
 var netSelected = 0 //0=main
 var interpretation = 0 //0=hash note, 1=amount note
@@ -97,6 +96,8 @@ FOV = 200
 // const RPC_URL = "https://rpc.testnet.soniclabs.com"
 const RPC_URL = "https://rpcapi.fantom.network"
 let lastProcessedBlockNumber = 0
+// var block_explorer = "https://testnet.soniclabs.com/tx/"
+var block_explorer = "https://ftmscan.com/tx/"
 
 async function getLatestBlockAndTransactions() {
   try {
@@ -155,7 +156,7 @@ function pollForNewBlocks() {
     if (transactions) {
       transactions.forEach(processTransaction)
     }
-  }, 500) // Poll every 0.5 seconds
+  }, 400) // Poll every 0.4 seconds
 }
 
 function processTransaction(txData) {
