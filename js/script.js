@@ -94,10 +94,10 @@ FOV = 200
 
 /** RPC functions */
 // const RPC_URL = "https://rpc.testnet.soniclabs.com"
-const RPC_URL = "https://rpcapi.fantom.network"
+const RPC_URL = "https://rpc.soniclabs.com"
 let lastProcessedBlockNumber = 0
 // var block_explorer = "https://testnet.soniclabs.com/tx/"
-var block_explorer = "https://ftmscan.com/tx/"
+var block_explorer = "https://sonicscan.org/tx/"
 
 async function getLatestBlockAndTransactions() {
   try {
